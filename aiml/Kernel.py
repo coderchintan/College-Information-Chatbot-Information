@@ -345,7 +345,7 @@ class Kernel:
         """
         for f in glob.glob(filename):
             if self._verboseMode: pass#print( "Loading %s..." % f, end="")
-            start = time.clock()
+            start = time.perf_counter()
             # Load and parse the AIML file.
             parser = create_parser()
             handler = parser.getContentHandler()

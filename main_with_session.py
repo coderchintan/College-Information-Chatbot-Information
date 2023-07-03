@@ -5,7 +5,7 @@ Created on Fri Mar 30 14:41:56 2018
 
 @author: Group-1
 """
-from flask import Flask, render_template, request, Session, session
+from flask import Flask, render_template, request, session
 import sqlite3
 import aiml
 from seminar2_progress import sntnce as s
@@ -78,7 +78,7 @@ INVALID_PWD_RES = ['Invalid password! Would you like to retry or have changed yo
 
 def login(user=False):
 	global userName, UNAME_REQ, PWD_REQ
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 	c=conn.cursor()
 	if(k.getPredicate('user_id', session.get('sid'))!=''):
 		
@@ -153,7 +153,7 @@ def login(user=False):
 	# printUser(K.user + inpt1)
 
 def logout():
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	k.setPredicate('user_id','', session.get('sid'))
@@ -164,7 +164,7 @@ def logout():
 	return("I have cleared your login information from my memory! Don't worry, you can trust me anytime!")
 	
 def displayAllGPA(idn):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	c.execute('SELECT fname, sem_id from STUD_INFO where id = ?',  [idn])
@@ -191,7 +191,7 @@ def displayAllGPA(idn):
 	
 	
 def findGPA(idn):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	c.execute('SELECT fname, sem_id from STUD_INFO where id = ?',  [idn])
@@ -211,7 +211,7 @@ def findGPA(idn):
 	return findCGPA(result[0][1:])
 	
 def findCGPA(sgpa):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 #    print(sgpa)
@@ -230,7 +230,7 @@ def findCGPA(sgpa):
 	return('Your CGPA is '+str(cgpa))
 
 def findGPA_sem(idn, sem_id):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	c.execute('SELECT fname from STUD_INFO where id = ?',  [idn])
@@ -249,7 +249,7 @@ def findGPA_sem(idn, sem_id):
 	return('Your SGPA of '+sem+ " is "+ str(result))
 	
 def findGPA_current(idn):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	c.execute('SELECT fname, sem_id from STUD_INFO where id = ?',  [idn])
@@ -274,7 +274,7 @@ def findGPA_current(idn):
 
 def checkIfAuthRequired(inp):
 	# do initial pre-processing
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	ensw = sent_check.ensw
@@ -301,7 +301,7 @@ def checkIfAuthRequired(inp):
 	return -1
 
 def conv_mapping(inp):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	new_inp = ''
@@ -317,7 +317,7 @@ def conv_mapping(inp):
 	return new_inp
 
 def providePersonalInfo(inp, idn):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	p_inp = preprocess(inp).split(' ')
@@ -352,7 +352,7 @@ def providePersonalInfo(inp, idn):
 
 def auth_module(inp):
 	global userName
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	if(checkIfAuthRequired(inp)==-1):
@@ -389,7 +389,7 @@ def auth_module(inp):
 	
 
 def printBot(msg, lst=None):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	print(botName+": "+msg)
@@ -399,7 +399,7 @@ def printBot(msg, lst=None):
 	conn.close() 
 	
 def match(line, word):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	pattern = '\\b'+word+'\\b'
@@ -412,10 +412,10 @@ def match(line, word):
 	return False
 
 def matchingSentence(inp):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
-	f = open('/home/chintan/Projects/College-Information-Chatbot-System-master/database/questions.txt')
+	f = open('database/questions.txt')
 	match = "";
 	max_score=0;
 	for line in f.readlines():
@@ -429,7 +429,7 @@ def matchingSentence(inp):
 	return match, max_score
 
 def preprocess(inp):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	if(inp!=""):
@@ -450,7 +450,7 @@ def preprocess(inp):
 	return inp
 
 def isKeyword(word):
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	f = open('database/questions.txt','r')
@@ -468,7 +468,7 @@ def isKeyword(word):
 def start(inp):
 
 	global userName,UNAME_REQ,PWD_REQ
-	conn = sqlite3.connect('/home/chintan/Projects/College-Information-Chatbot-System-master/seminar2_progress/shrya/sqlite/db/pythonsqlite.db')
+	conn = sqlite3.connect('pythonsqlite.db')
 
 	c = conn.cursor()
 	print(session.get('sid'))
